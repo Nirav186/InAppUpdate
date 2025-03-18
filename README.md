@@ -20,7 +20,7 @@ Add the following dependency to your **app-level `build.gradle`**:
 
 ```gradle
 dependencies {
-    implementation 'com.yourpackage:inappupdate:1.0.0'
+    implementation 'com.github.Nirav186:InAppUpdate:0.0.1'
 }
 ```
 
@@ -28,7 +28,7 @@ For **Gradle (Kotlin DSL)**:
 
 ```kotlin
 dependencies {
-    implementation("com.yourpackage:inappupdate:1.0.0")
+    implementation("com.github.Nirav186:InAppUpdate:0.0.1")
 }
 ```
 
