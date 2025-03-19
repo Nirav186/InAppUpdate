@@ -52,7 +52,9 @@ object InAppUpdateManager {
                 Toast.makeText(activity, "Download successful. Restarting app in 5 seconds.", Toast.LENGTH_LONG).show()
                 (activity as? LifecycleOwner)?.lifecycleScope?.launch {
                     delay(5000)
-                    updateManager.completeUpdate()
+                    if (::updateManager.isInitialized) {
+                        updateManager.completeUpdate()
+                    }
                 }
             }
             InstallStatus.INSTALLED -> {
@@ -88,10 +90,12 @@ object InAppUpdateManager {
 
     fun resumeUpdate() {
         if (appUpdateType == AppUpdateType.IMMEDIATE) {
-            updateManager.appUpdateInfo.addOnSuccessListener { info ->
-                if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    activity?.let {
-                        updateManager.startUpdateFlowForResult(info, appUpdateType, it, 123)
+            if (::updateManager.isInitialized) {
+                updateManager.appUpdateInfo.addOnSuccessListener { info ->
+                    if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                        activity?.let {
+                            updateManager.startUpdateFlowForResult(info, appUpdateType, it, 123)
+                        }
                     }
                 }
             }
